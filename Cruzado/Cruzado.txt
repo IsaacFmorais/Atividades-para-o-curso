@@ -1,0 +1,47 @@
+/*
+Autor: Isaac Fagundes
+Nome do programa: Cruzado
+Descrição: Simulador de Semáforo Cruzado
+*/
+
+#define ledVerdeOne 8
+#define ledVermelhoOne 11
+#define ledAmareloOne 9
+#define ledVerdeTwo 4
+#define ledVermelhoTwo 5
+#define ledAmareloTwo 3
+#define tempoVerde 3000
+#define tempoAmarelo 2000
+#define tempoVermelho 5000
+
+void setup()
+{
+  pinMode(ledVerdeOne,OUTPUT);
+    pinMode(ledVermelhoOne,OUTPUT);
+  pinMode(ledAmareloOne,OUTPUT);
+    pinMode(ledVerdeTwo,OUTPUT);
+  pinMode(ledAmareloTwo,OUTPUT);
+  pinMode(ledVermelhoTwo,OUTPUT);
+}
+
+void loop()
+{
+ 
+  digitalWrite(ledVermelhoOne,HIGH);
+  digitalWrite(ledVerdeTwo,HIGH);
+  delay(tempoVerde);
+  digitalWrite(ledVerdeTwo,LOW);
+  digitalWrite(ledAmareloTwo,HIGH);
+  delay(tempoAmarelo);
+  digitalWrite(ledAmareloTwo,LOW);  
+  digitalWrite(ledVermelhoOne,LOW);
+   digitalWrite(ledVermelhoTwo,HIGH);
+  digitalWrite(ledVerdeOne,HIGH);
+  delay(tempoVerde);
+  digitalWrite(ledVerdeOne,LOW);
+  digitalWrite(ledAmareloOne,HIGH);
+  delay(tempoAmarelo);
+    digitalWrite(ledAmareloOne,LOW),
+    digitalWrite(ledVermelhoTwo,LOW);
+   
+}
