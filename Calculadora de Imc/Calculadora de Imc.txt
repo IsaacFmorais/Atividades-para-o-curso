@@ -5,8 +5,8 @@
     Descrição: Calculadora de IMC
 */
 float Peso=15;
-float valor2=1.70;
-float Altura=0;
+float Altura=1.70;
+float AlturaAosq=0;
 float Imc=0;
 
 void setup()
