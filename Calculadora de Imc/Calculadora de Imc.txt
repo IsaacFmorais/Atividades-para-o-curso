@@ -1,0 +1,47 @@
+/*
+	Autor: Isaac Fagundes
+    Data:26/02/2025
+    Nome do programa: Aula 28
+    Descrição: Calculadora de IMC
+*/
+float Peso=15;
+float valor2=1.70;
+float Altura=0;
+float Imc=0;
+
+void setup()
+{
+ Serial.begin(9600);
+  Altura= pow (valor2, 2);
+ Imc= Peso / Altura;
+  Serial.print( "Seu Imc eh:");
+  Serial.println (Imc);
+   
+   if (Imc < 18.5 ){
+ Serial.print("Abaixo do peso normal");
+     
+   if (Imc >= 18.5 && Imc <=24.9 ){
+ Serial.print("Peso Normal");
+
+   
+   }else if (Imc >=25.0 && Imc <= 29.9){
+     Serial.print ("Excesso de peso");
+     
+   }else if (Imc >=30.0 && Imc>=34.9){
+     Serial.print("Obesodade classe I");
+     
+   }else if (Imc >= 35.0 && Imc>=39.9){
+     Serial.print("Obesidade classe II");
+                  
+                  }else{
+                    Serial.print("Obesidade classe III");
+                    
+                  
+     
+}
+   }
+}
+void loop()
+{
+  
+}
