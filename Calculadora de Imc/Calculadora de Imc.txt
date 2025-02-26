@@ -33,7 +33,7 @@ void setup()
    }else if (Imc >= 35.0 && Imc>=39.9){
      Serial.print("Obesidade classe II");
                   
-                  }else{
+                  }else if (Imc >= 40.0){
                     Serial.print("Obesidade classe III");
                     
                   
