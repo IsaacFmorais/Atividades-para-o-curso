@@ -1,0 +1,126 @@
+/*
+	Autor: Isaac Fagundes
+    Data:26/02/2025
+    Nome do programa: Aula 28
+    Descrição: Calculadora de IMC
+*/
+float Peso=15;
+float Altura=1.70;
+float AlturaAosq=0;
+/* 
+Autor: Isaac Fagundes Morais
+Data: 27/02/2025
+Nome do programa: Exercicios de estrutura condicional
+Descrição: Treino das materias passadas anteriormente
+Atividade 1
+*/
+
+#define pinLedRed 13 
+float temperatura=39;
+void setup()
+{
+  pinMode (pinLedRed, OUTPUT);
+  
+  if (temperatura>30){
+    digitalWrite (pinLedRed, HIGH);
+    
+    
+  }else if(temperatura>=30){
+digitalWrite (pinLedRed, LOW);
+    
+  }
+}
+
+void loop()
+{
+ 
+}
+
+/*
+Autor: Isaac Fagundes Morais
+Data: 27/02/2025
+Nome do programa: Exercicios de estrutura condicional
+Descrição: Treino das materias passadas anteriormente
+Atividade 2
+*/
+
+float bateria=11;
+  #define pinLedRed 12
+void setup()
+{
+    pinMode (pinLedRed, OUTPUT);
+  
+  if (bateria<20){
+    digitalWrite (pinLedRed, HIGH);
+    
+    
+  }else if(bateria>=20){
+digitalWrite (pinLedRed, LOW);
+  }
+}
+
+void loop()
+{
+ 
+}
+
+/* 
+Autor: Isaac Fagundes Morais
+Data: 27/02/2025
+Nome do programa: Exercicios de estrutura condicional
+Descrição: Treino das materias passadas anteriormente
+Atividade 3
+*/
+#define pinLedRed 13
+int valor=11;
+  int resultado=0;
+  
+void setup()
+{
+pinMode (pinLedRed, OUTPUT);
+  resultado=valor%2;
+    
+    if (resultado==0){
+    digitalWrite(pinLedRed, HIGH);
+    
+  }else if (resultado != 0){
+    digitalWrite(pinLedRed, LOW);
+  }
+    
+}
+
+void loop()
+{
+ 
+}
+
+/* 
+Autor: Isaac Fagundes Morais
+Data: 27/02/2025
+Nome do programa: Exercicios de estrutura condicional
+Descrição: Treino das materias passadas anteriormente
+Atividade 4
+*/
+#define pinLedRed 13
+int valor= 1;
+  int resultado=0;
+  
+void setup()
+{
+Serial.begin(9600);
+  
+  if (valor<0){
+    Serial.print("Este valor eh negativo");
+      
+  }else if (valor>0){
+    Serial.print("Este valor eh positivo");
+    
+  }else if (valor==0){
+    Serial.print("Este valor eh nulo");
+  }
+}
+
+void loop()
+{
+ 
+}
