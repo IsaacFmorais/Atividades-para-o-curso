@@ -1,0 +1,52 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 06/03/25
+Nome do programa: Exercicios de switch case
+Descrição:  Qualificador de ar
+*/
+#define pinLedRed 13
+#define pinLedLaranja 12
+#define pinLedGreen 11
+#define pinLedBlue 10
+#define pinLedBranco 9
+void setup()
+{
+  Serial.begin(2600);
+  int Ar = 3;
+  pinMode (pinLedRed,OUTPUT);
+  pinMode (pinLedLaranja,OUTPUT);
+   pinMode (pinLedGreen,OUTPUT);
+  pinMode (pinLedBlue,OUTPUT);
+   pinMode (pinLedBranco,OUTPUT);
+    switch (Ar)
+  {
+     case 0:
+    digitalWrite (pinLedRed, HIGH);
+    Serial.print ("Pessima");
+    break;
+     case 1:
+    digitalWrite (pinLedLaranja, HIGH);
+       Serial.print ("Ruim");
+      break;
+     case 2:
+     digitalWrite (pinLedGreen, HIGH);
+       Serial.print ("Normal");
+      break;
+     case 3:
+      digitalWrite (pinLedBlue, HIGH);
+       Serial.print ("Boa");
+      break;
+      case 4:
+      digitalWrite (pinLedBranco, HIGH);
+       Serial.print ("Excelente");
+      break;
+      default:
+       Serial.print ("Erro");
+      break;
+  }
+}
+
+void loop()
+{
+ 
+}
