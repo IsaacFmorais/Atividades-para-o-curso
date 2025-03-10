@@ -1,0 +1,60 @@
+/*
+Autor: Isaac Fagundes Morais
+Data:07/03/25
+Nome do programa: Semaforo sem delay
+Descrição: Utilização do millis em um codigo antigo
+*/
+#define pinLedRed 13
+#define pinLedAmarelo 12
+#define pinLedGreen 11
+unsigned long tempoRed= 5000;
+unsigned long tempoAmarelo= 3000;
+unsigned long tempoGreen= 2000 ;
+unsigned long tempoPassado=0;
+
+
+
+int estado=1;
+
+void setup()
+{
+  pinMode( pinLedRed, OUTPUT);
+   pinMode( pinLedGreen, OUTPUT);
+   pinMode( pinLedAmarelo, OUTPUT);
+  digitalWrite(pinLedRed,HIGH);
+}
+
+void loop()
+{
+  unsigned long tempoAtual= millis ();
+  if (tempoAtual- tempoPassado>=tempoGreen && estado==1 )
+  {
+     
+    digitalWrite(pinLedRed,LOW);
+    digitalWrite (pinLedAmarelo, LOW);
+    digitalWrite (pinLedGreen, HIGH);
+    estado=2;
+  } 
+  
+  
+  else if (tempoAtual-tempoPassado>=tempoAmarelo && estado==2)
+  {
+    digitalWrite(pinLedRed,LOW);
+   digitalWrite  (pinLedGreen, LOW);
+   digitalWrite (pinLedAmarelo, HIGH);
+    estado=3;  
+  }
+  
+  else if (tempoAtual-tempoPassado>=tempoRed && estado==3)
+  {
+    digitalWrite(pinLedRed,HIGH);
+    digitalWrite (pinLedGreen, LOW);
+    digitalWrite (pinLedAmarelo, LOW);
+    tempoPassado=tempoAtual; 
+    
+  estado=1;
+  }
+}
+
+        
+    
