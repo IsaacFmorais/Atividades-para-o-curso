@@ -1,0 +1,24 @@
+#define pinBotao 10
+#define pinLed 2
+void setup()
+{
+ Serial.begin (9600);
+ pinMode (pinLed,OUTPUT);
+ pinMode (pinBotao,INPUT);
+   
+}
+
+void loop()
+{
+  // Read = Ler
+  // Write = escrever
+  bool estadoBotao = digitalRead (pinBotao);
+  
+ Serial.println(estadoBotao);
+  
+  if (estadoBotao)
+    digitalWrite(pinLed,HIGH);
+  
+  else
+    digitalWrite(pinLed,LOW);
+}
