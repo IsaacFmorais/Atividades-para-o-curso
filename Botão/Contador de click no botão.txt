@@ -1,0 +1,29 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 12/06/25
+Nome do programa: Atividade para aperfeiçoar o uso do botão
+Descrição: Contador de clicks no botão 
+*/
+
+#define pinBotao 8
+void setup()
+{
+  pinMode(pinBotao, INPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  static bool estadoAnterior = 0;
+  static int contagem=0;
+  bool estadoAtual = digitalRead (pinBotao);  
+ 
+    
+    if ( estadoAtual==1 && estadoAnterior==0)
+    {
+      contagem++;
+      Serial.println(contagem);
+      
+  }
+estadoAnterior=estadoAtual;
+  }
