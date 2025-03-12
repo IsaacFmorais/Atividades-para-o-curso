@@ -1,0 +1,33 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 12/06/25
+Nome do programa: Atividade para aperfeiçoar o uso do botão
+Descrição: Piscar o Led ao ligar o botão e desligar apertando o botão
+*/
+#define pinBotao 8
+#define pinLed 2
+
+void setup()
+{
+  pinMode(pinBotao, INPUT);
+  pinMode(pinLed, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  
+  
+  bool estadoBotao = digitalRead (pinBotao);
+  static bool estadoLed=0;
+    
+    if (estadoBotao)
+    {
+     digitalWrite(pinLed, HIGH);
+     estadoLed= !estadoLed; 
+    }
+     else if (!estadoBotao && !estadoLed)
+     {
+      digitalWrite (pinLed, LOW); 
+     }
+  }
