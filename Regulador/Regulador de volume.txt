@@ -1,0 +1,19 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 14/03/25
+Nome do programa: Volume do Rádio
+Descrição: Como fazer um volume de rádio
+*/
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  int valor = analogRead(A0);
+  valor = map (valor, 0,1023,0,100);
+  Serial.print (valor);
+  Serial.println ("%");
+}
