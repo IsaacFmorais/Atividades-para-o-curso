@@ -1,0 +1,59 @@
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd (0x27, 16, 2);
+  
+/*
+Autor: Isaac Fagundes Morais
+Data: 15/03/25
+Nome do programa: Localizando botões
+Descrição: Identificando qual botçao está ligado
+*/
+#define botaoOne 0
+#define botaoTwo 145
+#define botaoTree 329
+#define botaoFour 505
+#define botaoFive 741
+
+void setup()
+{
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight(); 
+  
+}
+
+void loop()
+{
+ float valor = analogRead (A0);
+ 
+  if (valor==1023)
+  {
+     lcd.setCursor (0,0);
+    lcd.print("nenhum botao     ");
+    
+  }
+  else  if (botaoOne *0.9 <= valor && botaoOne * 1.1>= valor)
+  {
+     lcd.setCursor (0,0);
+    lcd.print("botao 1 ativado       ");    
+  }
+   else  if (botaoTwo * 0.9<= valor && botaoTwo * 1.1>= valor )
+  {
+     lcd.setCursor (0,0);
+    lcd.print("botao 2 ativado       ");    
+  }
+   else  if (botaoTree * 0.9<= valor && botaoTree * 1.1>= valor)
+  {
+     lcd.setCursor (0,0);
+    lcd.print("botao 3 ativado       ");
+  }
+   else  if (botaoFour * 0.9 <= valor && botaoFour * 1.1 >= valor)
+  {
+     lcd.setCursor (0,0);
+    lcd.print("botao 4 ativado       ");   
+  }
+   else  if (botaoFive *0.9<=valor && botaoFive * 1.1>= valor)
+  {
+     lcd.setCursor (0,0);
+    lcd.print("botao 5 ativado       ") ;   
+  }
+}

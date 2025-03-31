@@ -1,9 +1,11 @@
 /*
 Autor: Isaac Fagundes Morais
 Data: 12/06/25
-Nome do programa: Lcd + Led
-Descrição: Lcd representando o estado do Led
+Nome do programa: 123456789
+Descrição: contar de 1 ao 9 com o botão de lcd
 */
+
+
 #include <LiquidCrystal_I2C.h>
 #define pinBotao 9
 LiquidCrystal_I2C lcd (0x27, 16, 2);
@@ -21,16 +23,26 @@ void loop()
  static int contagem =0;
  bool estadoAtual= digitalRead (pinBotao);
  static bool estadoAnterior=0;
-  
+ static bool somaSubtracao=0 ;
  
  if (estadoAtual==1 && estadoAnterior==0)
  {
+   if (somaSubtracao==0)
+   {
    contagem++;
-   if (contagem==10) contagem=0;
-   lcd.print(contagem);
- } 
-  estadoAnterior=estadoAtual;
-    
-    
+   if (contagem==5) somaSubtracao=1;
+ }
+  //Subtração
+  
+  else
+ {
+   contagem--;
+   if (contagem ==1) somaSubtracao=0;
+ }
+  lcd.print(contagem);
+ }
+ estadoAnterior=estadoAtual;
 }
+
+
     

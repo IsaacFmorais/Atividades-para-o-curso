@@ -1,0 +1,45 @@
+#include <Arduino.h>
+#define pinLed 2
+#define pinBotao 4
+
+void setup() 
+{
+  pinMode(pinLed, OUTPUT);
+  pinMode(pinBotao, INPUT_PULLUP);
+}
+
+void loop()
+{
+static unsigned long estadoAnterior = 0;
+unsigned long tempoAtual = millis();
+bool estadobotao = digitalRead(pinBotao);
+static unsigned long tempoUltimaMudanca = 0;
+static bool ultimaAcao = 1;
+static bool estadoLed = 0;
+
+if (estadobotao != estadoAnterior)
+  {
+    tempoUltimaMudanca = tempoAtual;
+  }
+ if (tempoAtual - tempoUltimaMudanca > 50)
+  {
+
+    if (estadobotao != ultimaAcao)
+    {
+      ultimaAcao = estadobotao;
+
+      if (estadobotao == 0)
+      {
+       estadoLed = !estadoLed;
+       digitalWrite (pinLed, estadoLed);
+        
+      }
+      else
+      {
+      }
+    }
+  }
+  estadoAnterior = estadobotao;
+}
+
+

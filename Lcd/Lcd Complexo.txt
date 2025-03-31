@@ -1,0 +1,203 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 15/03/25
+Nome do programa: Lcd complexo
+Descrição: Uso do display para diversas coisas
+*/
+// DECLARAÇÃO DE BIBLIOTECA
+
+#include <LiquidCrystal_I2C.h>
+
+// DEFINIÇÕES
+#define valorBotao1 0
+#define valorBotao2 145  
+#define valorBotao3 329  
+#define valorBotao4 505
+#define valorBotao5 741
+#define valorSolto 1023
+#define pinLedA 11
+#define pinLedB 10
+
+// INSTANCIAS DE OBJETOS
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">LED A OFF");
+  lcd.setCursor(0,1);
+  lcd.print(" LED B OFF");
+  pinMode(pinLedA, OUTPUT);
+  pinMode(pinLedB, OUTPUT);
+}
+
+void loop()
+{
+    int valorLeituraAnalogica = analogRead(A0);
+    static int valorAnterior = 1023;
+    static bool posicao = 0;
+    static bool estadoLedA = 0 ;
+    static bool estadoLedB = 0;
+    static bool atualizacao=0;
+    static int intensidade=0;
+    static int valorB= map (intensidade,0,100,0,255);
+    static int valorA=  map (intensidade,0,100,0,255);
+   
+   
+  
+  //***** TRATAMENTO DOS BOTOES *******
+  // NENHUM BOTAO
+  if (valorLeituraAnalogica == valorSolto)
+   {
+     
+   }
+ 
+  //BOTAO 1 PRESSIONADO
+     else if(valorLeituraAnalogica == valorBotao1 &&
+             valorAnterior == valorSolto)
+    {
+      posicao = 0;
+      atualizacao=1;
+    }
+ 
+   //BOTAO 2 PRESSIONADO
+      else if(valorLeituraAnalogica >= valorBotao2 * 0.9  &&
+            valorLeituraAnalogica <= valorBotao2 * 1.1 &&
+            valorAnterior == valorSolto)
+    {
+      posicao = 1;
+      atualizacao=1;
+    }
+ 
+   //BOTAO 3 PRESSIONADO
+    else if(valorLeituraAnalogica >= valorBotao3 * 0.9  &&
+            valorLeituraAnalogica <= valorBotao3 * 1.1 &&
+            valorAnterior == valorSolto)
+    {
+      atualizacao=1;
+      if (!posicao)
+      {
+       if (valorA>0 && estadoLedA)
+          valorA = valorA - 10;
+         
+      } else
+      {
+         if (valorB>0 && estadoLedB)
+            valorB= valorB - 10;
+      }
+ 
+    }
+   
+   //BOTAO 4 PRESSIONADO
+   else if(valorLeituraAnalogica >= valorBotao4 * 0.9  &&
+            valorLeituraAnalogica <= valorBotao4 * 1.1 &&
+            valorAnterior == valorSolto)
+    {
+       atualizacao=1;
+       if (!posicao)
+      {
+        if (valorB<100 && estadoLedA)
+          valorA += 10;
+         
+      } else
+      {
+         if (valorB<100 && estadoLedB)
+             valorB += 10;
+      }
+     
+    }
+ 
+   //BOTAO 5 PRESSIONADO
+      else if(valorLeituraAnalogica >= valorBotao5 * 0.9  &&
+            valorLeituraAnalogica <= valorBotao5 * 1.1 &&
+            valorAnterior == valorSolto)
+    {
+     atualizacao=1;
+     if(!posicao) 
+       estadoLedA=!estadoLedA;
+    
+        
+     else
+       estadoLedB=!estadoLedB;
+     
+    
+    }
+   
+ 
+  valorAnterior = valorLeituraAnalogica;
+
+  //****** FIM DO TRATAMENTO DOS BOTOES ******
+ 
+  if (atualizacao)
+  {
+ 
+   // ***** ATUALIZA DISPLAY ******
+  if(posicao == 0)
+  {
+    lcd.setCursor(0,0);
+    lcd.print(">");
+    lcd.setCursor(0,1);
+    lcd.print(" ");
+  }
+  else
+    {
+    lcd.setCursor(0,1);
+    lcd.print(">");
+    lcd.setCursor(0,0);
+    lcd.print(" ");
+    }
+ 
+ lcd.setCursor(7,0); 
+    
+  //MUDA O TEXTO DO LED A
+    if (!estadoLedA)
+    {
+     lcd.print ("OFF");
+    }
+  else 
+  {
+    lcd.print (valorA);
+    lcd.print ("   ");
+  }
+  
+ 
+    lcd.setCursor(7,1);
+    
+  //MUDA O TEXTO DO LED B
+ if (!estadoLedB)
+    {
+     lcd.print ("OFF");
+    }
+  else 
+  {
+    lcd.print (valorB);
+    lcd.print ("   ");
+  }
+  
+  
+  
+    //***** ATUALIZACAO DOS LED ******
+  //LED A
+   if (estadoLedA)
+    analogWrite (pinLedA, valorA); 
+    
+   else
+     digitalWrite (pinLedA,0);
+                   
+  //LED B
+       if (estadoLedB)
+    analogWrite (pinLedB, valorB); 
+    
+   else
+     digitalWrite (pinLedB,0);
+  }
+}
+  
+
+  
+  
+    
+    
+ 
