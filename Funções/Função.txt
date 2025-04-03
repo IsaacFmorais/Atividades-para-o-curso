@@ -1,0 +1,62 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 03/04/25
+Nome: Funções
+Descrição: Relatando algumas informações sobre funções e como é usada no codigo
+*/
+#include <Arduino.h>
+const int pinBotao= 3; // uma variavel constante, nunca irá adquirir outro valor
+
+//! PROTOTIPOS DE FUNÇÕES
+//Aqui as funções serão chamadas, mesmo sendo escritas depois do loop
+void ligaLed (int); // entre os parenteses, há um parametro, que é aquilo qie a função pede para funcionar
+void desligaLed (int);
+void piscaLed (int, unsigned long);
+int soma (int, int); // função do tipo int retorna parametros, o contrario do void
+
+
+void setup() 
+{
+  pinMode (2, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+  piscaLed(2,100);
+  int resultadoSoma= soma(4,8); //por conta de ser chamada na parte de prototipos, a função pode ser usada
+  Serial.println (resultadoSoma);
+}
+
+
+void ligaLed (int pin)
+// pin é o numero pedido para poder ativar o Led, sendo seu parametro. É usado para ligar o Led
+{
+  digitalWrite(pin, HIGH);  
+// o numero inteiro jogado na função, será jogado nesse comando acima, ligando o led
+}
+
+void desligaLed (int pin) 
+// pin é o numero pedido para poder ativar o Led, sendo seu parametro. É usado para desligar o Led
+{
+  digitalWrite(pin,LOW);
+  // o numero inteiro jogado na função, será jogado nesse comando acima, desligando o led
+}
+
+void piscaLed (int pin, unsigned long tempo) 
+// tempo seria utilizado nos intervalos de tempo entre ligar e desligar. Sua função é piscar o Led
+ {
+  //* Aqui chamamos funções já pré-chamadas para poder piscar o led 
+   ligaLed(pin);
+   delay(tempo);
+   desligaLed(pin);
+   delay(tempo);
+ }
+
+ int soma (int numeroA, int numeroB)
+ //Essa função utiliza de parametros inteiros, além de ser do tipo int, semelhante aos demais, mas nesse cas0 serveria para gerar uma soma
+ {
+   int resultado = numeroA + numeroB;
+   return resultado;
+   //return consegue retornar valores inteiros, afinal é o tipo da função
+ }
