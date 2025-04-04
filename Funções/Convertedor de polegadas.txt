@@ -1,0 +1,28 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 03/04/25
+Nome: Convertedor de Graus para fahrenheit
+Descrição: Converte polegadas para cm
+*/
+
+
+#include <Arduino.h>
+
+//! PROTOTIPO
+float Fahrenheit(float C);
+
+void setup()
+{
+  Serial.begin(9600);
+  float temperatura = Fahrenheit(50);
+  Serial.println(temperatura);
+}
+
+void loop()
+{
+}
+
+float Fahrenheit(float C)
+{
+  return (C * 9 / 5) + 32 ;
+}
