@@ -1,0 +1,28 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 03/04/25
+Nome: Gerador de cm 
+Descrição: converte polegadas para cm
+*/
+
+
+#include <Arduino.h>
+
+//! PROTOTIPO
+float polegadas(float);
+
+void setup()
+{
+  Serial.begin(9600);
+  float medida = polegadas(50);
+  Serial.println(medida);
+}
+
+void loop()
+{
+}
+
+float polegadas(float p)
+{
+  return p * 2.54 ;
+}

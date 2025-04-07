@@ -1,0 +1,28 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 03/04/25
+Nome: Gerador de hipotenusa
+Descrição: Gera uma hipotenusa
+*/
+
+
+#include <Arduino.h>
+
+//! PROTOTIPO
+float pitagoras(float, float);
+
+void setup()
+{
+  Serial.begin(9600);
+  float hipotenusa = pitagoras(2.5, 3.5);
+  Serial.println(hipotenusa);
+}
+
+void loop()
+{
+}
+
+float pitagoras(float catetoA, float catetoB)
+{
+  return sqrt(sq(catetoA) + sq(catetoB));
+}
