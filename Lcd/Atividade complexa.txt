@@ -1,0 +1,91 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 08/04/25
+Nome: Atividade complexa
+Estado: Incompleto, feito até o quarto passo
+*/
+
+#include <Arduino.h>
+#include <Bounce2.h>
+#include <LiquidCrystal_I2C.h>
+
+#define pinLed1 5
+#define pinLed2 4
+#define pinLed3 2
+#define pinLed4 15
+#define pinBotao1 18
+#define pinBotao2 19
+#define pinBotao3 23
+
+//* INSTANCIAS
+Bounce botao1 = Bounce();
+Bounce botao2 = Bounce();
+Bounce botao3 = Bounce();
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+//! globais
+int contagem = 0;
+
+void setup()
+{
+  botao1.attach(pinBotao1, INPUT_PULLUP);
+  botao2.attach(pinBotao2, INPUT_PULLUP);
+  botao3.attach(pinBotao3, INPUT_PULLUP);
+  lcd.init();
+  lcd.backlight();
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  // Botao3();
+  static bool selecao = 0;
+  static bool atualizacao = 0;
+  static bool ativarContagem1 = 0;
+  static int contagem = 0;
+  static bool ativarContagem2 = 0;
+  botao3.update();
+  botao2.update();
+  botao1.update();
+
+  if (botao1.fell())
+  {
+    ativarContagem1 = !ativarContagem1;
+    atualizacao = 1;
+  }
+  
+  if (botao2.fell())
+  {
+    ativarContagem2 = !ativarContagem2;
+    atualizacao = 1;
+  }
+
+  if (botao3.fell())
+  {
+    selecao = !selecao;
+    atualizacao = 1;
+  }
+
+  //! Modo seleção
+  if (atualizacao)
+  {
+    if (selecao)
+    {
+      Serial.println("Verdadeiro");
+      //Button One
+      if (ativarContagem1 && contagem < 4)
+      {
+        contagem++;
+        Serial.println(contagem);
+      }
+
+      else if (contagem == 3)
+        contagem = -1;
+
+     atualizacao=0;
+    }
+    
+  }
+
+
+

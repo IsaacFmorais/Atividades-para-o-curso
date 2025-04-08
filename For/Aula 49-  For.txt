@@ -1,0 +1,24 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 2/4/2025
+Nome: Aula 49- For
+Descrição: Gerar tabuadas de formas automaticas
+*/
+#include <Arduino.h>
+
+void setup()
+{
+  Serial.begin(9600);
+
+  for (int tabuada = 0; tabuada <= 10; tabuada++)
+  {
+    for (int numero = 0; numero <= 10; numero++)
+    {
+      Serial.printf(" %d x %d = %d \n\r", tabuada,numero,tabuada*numero);
+    }
+  }
+}
+
+void loop()
+{
+}
