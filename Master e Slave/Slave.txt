@@ -1,0 +1,83 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 16/04/2025
+Nome do programa: Slave
+Descrição: Um exemplar de um esp slave
+*/
+
+#include <Arduino.h>
+#include <BluetoothSerial.h>
+
+#define pinled 2
+
+BluetoothSerial BT;
+
+void setup()
+{
+  pinMode(pinled, OUTPUT);
+  
+  Serial.begin(9600);
+
+  if (BT.begin("EspSlaveMarryh"))
+  {
+    Serial.println("Bluetooth iniciado com sucesso");
+  }
+  else
+  {
+    Serial.println("Erro ao iniciar o Bluetooth");
+  }
+  Serial.println(BT.getBtAddressString());
+}
+
+void loop()
+{
+  static bool estadoled = false;
+  static bool pisca = false;
+  static int velocidade= 300;
+
+  if (Serial.available()) // se estiver algo na serial
+  {
+    String mensagemEnviar = Serial.readStringUntil('\n'); // le a seria, ate encontrar o espaco
+    mensagemEnviar.trim();                                // trata a mensagem
+    BT.println(mensagemEnviar);                           // vai pegar a mensagem e vai enviar para o outro esp
+  }
+
+  if (BT.available())
+  {
+    String mensagemRecebida = BT.readStringUntil('\n'); // le a serial, ate encontrar o espaco
+    mensagemRecebida.trim();                            // trata a mensagem
+    Serial.println(mensagemRecebida);                   // juntar as frases
+
+    if (mensagemRecebida.equals("liga"))
+    {
+      estadoled = true;
+      BT.println("Led ligado");
+       pisca = false;
+    }
+
+    if (mensagemRecebida.equals("desliga"))
+    {
+      estadoled = false;
+      BT.println("Led desligado");
+      pisca = false;
+    }
+    if (mensagemRecebida.equals("pisca"))
+    {
+       pisca = true;
+       BT.println("Led piscando");
+    }
+  }
+  if (pisca == true)
+  {
+    unsigned long tempoatual = millis();
+    static unsigned long tempoinicial = 0;
+    String mensagem = Serial.readStringUntil('\n');
+
+    if (tempoatual - tempoinicial > velocidade)
+    {
+      estadoled = !estadoled;
+      tempoinicial = tempoatual;
+    }
+  }
+  digitalWrite(pinled, estadoled);
+}
