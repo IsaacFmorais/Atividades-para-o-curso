@@ -1,0 +1,95 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 16/04/2025
+Nome do programa: Master
+Descrição: Um exemplar de um esp master
+*/
+#include <Arduino.h>
+#include <BluetoothSerial.h>
+
+BluetoothSerial BT;
+
+#define pinLed 2
+
+uint8_t endSlave[] = {0x08, 0x3A, 0xF2, 0x8F, 0x90, 0xB6};
+
+
+
+void setup()
+{ 
+  pinMode(pinLed, OUTPUT);
+  Serial.begin(9600); // liga o serial
+  //!                        ↓ Indica que é master
+  if (BT.begin("Isaac_Esp", true)) // verifica o bluetooh se está ativo ou não, o comando verifica que é master
+
+    Serial.println("Certinho, mermào");
+
+  else
+    Serial.println("No,non,nien");
+
+  if (BT.connect(endSlave)) // verifica se conectou ao esp do amiguinho, o comando conecta
+    Serial.println("Conectado com sucesso");
+
+  else
+    Serial.println("Problemas ao conectar");
+
+  // Serial.println(""); //pula uma linha
+ //* Serial.println(BT.getBtAddressString()); //  mostra o endereço fisico do bluetooh
+}
+
+void loop()
+{
+  static bool estadoLed = false;
+  static bool piscar = false;
+  static int velocidade = 300;
+  if (Serial.available())
+  {
+    String msgEnviar = Serial.readStringUntil('\n'); // leia serial, acabando quando encontrar o enter
+    msgEnviar.trim();
+    BT.println(msgEnviar);
+  }
+
+  if (BT.available())
+  {
+    String msgRecebida = BT.readStringUntil('\n');
+    msgRecebida.trim();
+    Serial.println(msgRecebida);
+
+    if (msgRecebida.equals("liga"))
+    {
+      estadoLed = true;
+      piscar = false;
+        BT.println("Led ligado");
+
+    }
+
+    if (msgRecebida.equals("desliga"))
+    {
+      estadoLed = false;
+      piscar = false;
+      BT.println("Led desligado");
+    }
+
+     if (msgRecebida.equals("pisca"))
+    {
+      piscar = true;
+        BT.println("Led piscando");
+    
+
+    }
+  }
+
+  if (piscar == true)
+  {
+    unsigned long tempoAtual = millis();
+    static unsigned long tempoAnterior = 0;
+
+    if (tempoAtual - tempoAnterior >= velocidade)
+    {
+      estadoLed = !estadoLed;
+      tempoAnterior = tempoAtual;
+    }
+  }
+
+  digitalWrite(pinLed, estadoLed);
+}
