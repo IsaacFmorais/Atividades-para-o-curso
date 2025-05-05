@@ -1,0 +1,201 @@
+/*
+Autor: Isaac Fagundes Morais
+Data: 05/05/2025
+Nome do programa: Leds de potencia mudável
+Descrição: Este programa altera a intensidade dos leds, mostrando no LCD.
+*/
+#include <Arduino.h>
+#include <Bounce2.h>
+#include <LiquidCrystal_I2C.h>
+
+#define botaoA 9
+#define botaoB 10
+#define botaoC 11
+#define LedA 15
+#define LedB 2
+#define LedC 4
+#define LedD 5
+
+
+//* INSTANCIAS
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+Bounce botao1 = Bounce();
+Bounce botao2 = Bounce();
+Bounce botao3 = Bounce();
+
+void setup()
+{
+  botao1.attach(botaoA, INPUT_PULLUP);
+  botao2.attach(botaoB, INPUT_PULLUP);
+  botao3.attach(botaoC, INPUT_PULLUP);
+  pinMode(LedA,OUTPUT);
+  pinMode(LedB,OUTPUT);
+  pinMode(LedC,OUTPUT);
+  pinMode(LedD,OUTPUT);
+
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(">Led1 - 0");
+  lcd.setCursor(0,1);
+  lcd.print(" Led2 - 0");
+  lcd.setCursor(0,2);
+  lcd.print(" Led3 - 0");
+  lcd.setCursor(0,3);
+  lcd.print(" Led4 - 0");
+}
+
+void loop()
+{
+  static bool modoSelecao = 1;
+  static int contagem = 0;
+  static int itnLedA = 0;
+  static int itnLedB = 0;
+  static int itnLedC = 0;
+  static int itnLedD = 0;
+
+  botao1.update();
+  botao2.update();
+  botao3.update();
+
+  //*BOTAO C
+  if (botao3.fell())
+  {
+    modoSelecao = !modoSelecao;
+  }
+  //* BOTAO B
+  if (botao2.fell())
+  {
+    if (modoSelecao)
+      contagem++;
+
+    if (contagem > 3)
+      contagem = 0;
+    else
+    {
+      switch (contagem)
+      {
+      case0:
+        if (itnLedA <= 90)
+          itnLedA += 10;
+        break;
+
+      case1:
+        if (itnLedB <= 90)
+          itnLedB += 10;
+        break;
+
+      case2:
+        if (itnLedC <= 90)
+          itnLedC += 10;
+        break;
+
+      case3:
+        if (itnLedD <= 90)
+          itnLedD += 10;
+        break;
+
+      default:
+        break;
+      }
+    }
+  }
+  //*BOTAO A
+  if (botao1.fell())
+  {
+    if (modoSelecao)
+      contagem--;
+
+    if (contagem < 0)
+      contagem = 3;
+    else
+    {
+      switch (contagem)
+      {
+      case0:
+        if (itnLedA > 0)
+          itnLedA -= 10;
+        break;
+
+      case1:
+        if (itnLedB > 0)
+          itnLedB -= 10;
+        break;
+
+      case2:
+        if (itnLedC > 0)
+          itnLedC -= 10;
+        break;
+
+      case3:
+        if (itnLedD > 0)
+          itnLedD -= 10;
+        break;
+
+      default:
+        break;
+      }
+    }
+  }
+
+//todo LCD
+
+if (contagem)
+{
+  if (contagem==0)
+  {
+    lcd.setCursor(0,0);
+    lcd.print (">");
+    lcd.setCursor(0,1);
+    lcd.print (" ");
+    lcd.setCursor(0,3);
+    lcd.print (" ");
+    lcd.setCursor(10,1);
+    lcd.print (itnLedA);
+
+  }
+  else if (contagem==1)
+  {
+    lcd.setCursor(0,0);
+    lcd.print (" ");
+    lcd.setCursor(0,1);
+    lcd.print (">");
+    lcd.setCursor(0,2);
+    lcd.print (" ");
+    lcd.setCursor(0,3);
+    lcd.print (" ");
+
+    lcd.setCursor(10,2);
+    lcd.print (itnLedB);
+  }
+  else if (contagem==2)
+  {
+    lcd.setCursor(0,0);
+    lcd.print (" ");
+    lcd.setCursor(0,1);
+    lcd.print (" ");
+    lcd.setCursor(0,2);
+    lcd.print (">");
+    lcd.setCursor(0,3);
+    lcd.print (" ");
+
+    lcd.setCursor(10,3);
+    lcd.print (itnLedC);
+  }
+  else
+  {
+    lcd.setCursor(0,0);
+    lcd.print (" ");
+    lcd.setCursor(0,1);
+    lcd.print (" ");
+    lcd.setCursor(0,2);
+    lcd.print (" ");
+    lcd.setCursor(0,3);
+    lcd.print (">");
+
+    lcd.setCursor(10,4);
+    lcd.print (itnLedD);
+  }
+}
+
+}
